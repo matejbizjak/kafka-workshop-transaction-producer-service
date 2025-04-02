@@ -2,7 +2,7 @@
 
 Clone the repositories:
 
-- https://github.com/matejbizjak/kafka-workshop-transaction-dashboard-service
+- https://github.com/matejbizjak/kafka-workshop-transaction-producer-service
 - https://github.com/matejbizjak/kafka-workshop-fraud-detection-service
 - https://github.com/matejbizjak/kafka-workshop-transaction-dashboard-service
 
