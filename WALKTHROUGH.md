@@ -32,7 +32,21 @@ public Multi<Record<String, TransactionEvent>> produceTransactions() {
 
 Use this import: `import io.smallrye.reactive.messaging.kafka.Record;`
 
-And comment out the previous producer
+And comment out or delete the following lines:
+```java
+//    @Channel("transactions")
+//    Emitter<TransactionEvent> emitter;
+
+//    /**
+//     * Produces a single transaction event.
+//     * @return a CompletionStage that completes when the message is acknowledged by the Kafka client.
+//     */
+//    public CompletionStage<Void> produceTransaction() {
+//        LOG.info("Generating transaction...");
+//        Transaction transaction = transactionService.generateTransaction();
+//        return emitter.send(transactionMapper.dtoToEvent(transaction));
+//    }
+```
 
 ## fraud-detection-service
 
