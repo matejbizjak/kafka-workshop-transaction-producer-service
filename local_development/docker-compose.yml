@@ -1,0 +1,43 @@
+services:
+
+  zookeeper:
+    image: quay.io/strimzi/kafka:0.32.0-kafka-3.3.1
+    command: [
+      "sh", "-c",
+      "bin/zookeeper-server-start.sh config/zookeeper.properties"
+    ]
+    ports:
+      - "2181:2181"
+    environment:
+      LOG_DIR: /tmp/logs
+
+  kafka:
+    image: quay.io/strimzi/kafka:0.32.0-kafka-3.3.1
+    command: >
+      sh -c "bin/kafka-server-start.sh config/server.properties --override listeners=INTERNAL://0.0.0.0:29092,EXTERNAL://0.0.0.0:9092 --override advertised.listeners=INTERNAL://kafka:29092,EXTERNAL://localhost:9092 --override listener.security.protocol.map=INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT --override inter.broker.listener.name=INTERNAL --override zookeeper.connect=zookeeper:2181"
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+    depends_on:
+      - zookeeper
+    environment:
+      LOG_DIR: "/tmp/logs"
+
+  schema-registry:
+    image: apicurio/apicurio-registry-mem:2.6.8.Final
+    ports:
+      - 8081:8080
+    depends_on:
+      - kafka
+    environment:
+      QUARKUS_PROFILE: prod
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop:4.1.0
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKERCONNECT: kafka:29092
+      JVM_OPTS: "-Xms32M -Xmx64M"
+    depends_on:
+      - kafka

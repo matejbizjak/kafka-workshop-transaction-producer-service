@@ -1,0 +1,60 @@
+{
+  "$id": "https://example.com/kafka/transaction.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "version": "1.0.0",
+  "groupId": "com.example.kafka",
+  "title": "transaction",
+  "description": "A bank transaction event.",
+  "javaType": "com.example.kafka.messaging.TransactionEvent",
+  "type": "object",
+  "properties": {
+    "transactionId": {
+      "type": "string",
+      "maxLength": 128,
+      "description": "Unique identifier of the transaction."
+    },
+    "accountId": {
+      "type": "string",
+      "maxLength": 128,
+      "description": "Identifier of the account associated with the transaction."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the transaction occurred."
+    },
+    "transactionType": {
+      "type": "string",
+      "description": "Type of transaction (DEBIT or CREDIT).",
+      "enum": ["DEBIT", "CREDIT"]
+    },
+    "amount": {
+      "type": "number",
+      "description": "Transaction amount."
+    },
+    "location": {
+      "type": "string",
+      "maxLength": 2,
+      "description": "ISO 3166-1 alpha-2 country code representing where the transaction originated or was processed (e.g., 'US', 'DE', 'PL')."
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1024,
+      "description": "Description or context of the transaction (optional)."
+    },
+    "category": {
+      "type": "string",
+      "maxLength": 256,
+      "description": "Category of transaction."
+    }
+  },
+  "required": [
+    "transactionId",
+    "accountId",
+    "timestamp",
+    "transactionType",
+    "amount",
+    "location"
+  ],
+  "definitions": {}
+}
